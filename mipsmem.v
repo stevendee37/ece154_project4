@@ -3,7 +3,7 @@
 // Todo: Implement data memory
 module dmem(input   clk, we,
             input   [31:0] a, wd,
-            output  wire [31:0] rd);
+            output  [31:0] rd);
   
 // **PUT YOUR CODE HERE**
   reg [31:0] RAM[63:0];
@@ -16,7 +16,7 @@ endmodule
 
 // Instruction memory (already implemented)
 module imem(input   [5:0]  a,
-            output  wire [31:0] rd);
+            output  [31:0] rd);
 
   reg [31:0] RAM[63:0];
 
