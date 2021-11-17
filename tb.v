@@ -2,8 +2,8 @@ module tb();
   reg clk;
   reg reset;
 
-  reg [31:0] writedata, dataadr;
-  reg memwrite;
+  wire [31:0] writedata, dataadr;
+  wire memwrite;
 
   // instantiate device to be tested
   top dut(clk, reset);
@@ -28,7 +28,7 @@ module tb();
           $display("Simulation succeeded");
 	  $stop;
 	end else if (dataadr !== 80) begin
-	  $display ("Simulation fialed");
+	  $display ("Simulation failed");
 	  $stop;
 	end
       end
