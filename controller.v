@@ -5,7 +5,7 @@ module maindec(input [5:0] op,
 	       output	jump, BNE, sigzer,
 	       output [1:0] aluop);
   
-  reg [9:0] controls;
+  reg [10:0] controls;
   assign {regwrite, regdst, alusrc, branch, memwrite,
  	  memtoreg, jump, BNE, sigzer, aluop} = controls;
 
@@ -17,6 +17,7 @@ module maindec(input [5:0] op,
       6'b000100: controls <= 11'b00010000001; // BEQ
       6'b001000: controls <= 11'b10100000000; // ADDI
       6'b000010: controls <= 11'b00000010000; // J
+      ////////// CHANGE: Added Opcode -> instruction directions
       6'b001101: controls <= 11'b10100000111; // ORI
       6'b000101: controls <= 11'b00000001001; // BNE
       default:   controls <= 11'bxxxxxxxxxxx; // illegal op
@@ -31,6 +32,7 @@ module aludec(input     [5:0] funct,
     case(aluop)
       2'b00: alucontrol <= 3'b010; // add (for lw/sw/addi)
       2'b01: alucontrol <= 3'b110; // sub (for beq)
+      ////////// CHANGE: Added extended functionality for ALU decoder in alucontrol
       2'b11: alucontrol <= 3'b001; // or (for ori)
       default: case(funct)	   // R-type instructions
         6'b100000: alucontrol <= 3'b010; // add
