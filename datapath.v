@@ -25,6 +25,7 @@ module signext(input [15:0] a,
   assign y = {{16{a[15]}}, a};
 endmodule
 
+///////// CHANGED: Zero Extension Module which extends the most significant digit with zeros
 module zeroext(input [15:0] a,
 	       output [31:0] y);
   assign y = {16'b0, a};

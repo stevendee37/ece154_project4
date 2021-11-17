@@ -15,10 +15,10 @@ module mips(input          clk, reset,
 
   controller c(instr[31:26], instr[5:0], zero,
                memtoreg, memwrite, pcsrc,
-               alusrc, regdst, regwrite, jump, BNE, sigzer, 
+               alusrc, regdst, regwrite, jump, sigzer, 
                alucontrol);
   datapath dp(clk, reset, memtoreg, pcsrc,
-              alusrc, regdst, regwrite, jump, BNE, sigzer, 
+              alusrc, regdst, regwrite, jump, sigzer, 
               alucontrol,
               zero, pc, instr,
               aluout, writedata, readdata);
@@ -31,12 +31,12 @@ module controller(input   [5:0] op, funct,
                   output        memtoreg, memwrite,
                   output        pcsrc, alusrc,
                   output        regdst, regwrite,
-                  output        jump, BNE, sigzer,
+                  output        jump, sigzer,
                   output  [2:0] alucontrol);
 
 // **PUT YOUR CODE HERE**
   wire [1:0] aluop;
-  wire branch;
+  wire branch, BNE;
 
   maindec md(op, memtoreg, memwrite, branch, alusrc, regdst, regwrite, jump, BNE, sigzer, aluop);
   aludec ad(funct, aluop, alucontrol);
@@ -54,7 +54,7 @@ module datapath(input          clk, reset,
                 input          memtoreg, pcsrc,
                 input          alusrc, regdst,
                 input          regwrite, jump,
-		input 	       BNE, sigzer,
+		input 	       sigzer,
                 input   [2:0]  alucontrol,
                 output         zero,
                 output  [31:0] pc,
