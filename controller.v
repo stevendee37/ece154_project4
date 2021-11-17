@@ -9,7 +9,7 @@ module maindec(input [5:0] op,
   assign {regwrite, regdst, alusrc, branch, memwrite,
  	  memtoreg, jump, aluop} = controls;
 
-  always
+  always@(*) begin
     case(op)
       6'b000000: controls <= 9'b110000010; // RTYPE
       6'b100011: controls <= 9'b101001000; // LW
@@ -17,16 +17,15 @@ module maindec(input [5:0] op,
       6'b000100: controls <= 9'b000100001; // BEQ
       6'b001000: controls <= 9'b101000000; // ADDI
       6'b000010: controls <= 9'b000000100; // J
-      // 6'b // ORI
-      // 6'b // BNE
       default:   controls <= 9'bxxxxxxxxx; // illegal op
     endcase
+  end
 endmodule
 
-module aludec(input    reg [5:0] funct,
-	      input    reg [1:0] aluop,
-	      output   reg[2:0] alucontrol);
-  always
+module aludec(input     [5:0] funct,
+	      input     [1:0] aluop,
+	      output    reg [2:0] alucontrol);
+  always@(*) begin
     case(aluop)
       2'b00: alucontrol <= 3'b010; // add (for lw/sw/addi)
       2'b01: alucontrol <= 3'b110; // sub (for beq)
@@ -39,4 +38,5 @@ module aludec(input    reg [5:0] funct,
         default:   alucontrol <= 3'bxxx; // n/a
       endcase
     endcase
+  end
 endmodule
